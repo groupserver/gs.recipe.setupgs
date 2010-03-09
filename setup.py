@@ -4,11 +4,12 @@ This module contains the tool of gs.recipe.setupgs
 """
 import os
 from setuptools import setup, find_packages
+from version import get_version
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '0.2'
+version = get_version()
 
 long_description = (
     read('README.txt')
@@ -16,20 +17,18 @@ long_description = (
     'Detailed Documentation\n'
     '**********************\n'
     + '\n' +
-    read('gs', 'recipe', 'setupgs', 'README.txt')
+    read('gs', 'recipe', 'setupgs', 'docs', 'README.txt')
     + '\n' +
     'Contributors\n' 
     '************\n'
     + '\n' +
-    read('CONTRIBUTORS.txt')
+    read('gs', 'recipe', 'setupgs', 'docs', 'CONTRIBUTORS.txt')
     + '\n' +
     'Change history\n'
     '**************\n'
     + '\n' + 
-    read('CHANGES.txt')
-    + '\n' +
-   'Download\n'
-    '********\n'
+    read('gs', 'recipe', 'setupgs', 'docs', 'CHANGES.txt')
+    + '\n'
     )
 entry_point = 'gs.recipe.setupgs:Recipe'
 entry_points = {"zc.buildout": ["default = %s" % entry_point]}
@@ -47,6 +46,11 @@ setup(name='gs.recipe.setupgs',
         'Topic :: Software Development :: Build Tools',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: Zope Public License',
+        "Development Status :: 4 - Beta",
+        "License :: Other/Proprietary License",
+        "Natural Language :: English",
+        "Operating System :: POSIX :: Linux"
+        "Programming Language :: Python",
         ],
       keywords='zope groupserver recipe setup instance',
       author='Richard Waid',
@@ -66,3 +70,4 @@ setup(name='gs.recipe.setupgs',
       test_suite = 'gs.recipe.setupgs.tests.test_docs.test_suite',
       entry_points=entry_points,
       )
+
