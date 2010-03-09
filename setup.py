@@ -6,28 +6,14 @@ import os
 from setuptools import setup, find_packages
 from version import get_version
 
-def read(*rnames):
-    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
-
 version = get_version()
 
 long_description = (
-    read('README.txt')
+    file('README.txt').read()
     + '\n' +
-    'Detailed Documentation\n'
-    '**********************\n'
-    + '\n' +
-    read('gs', 'recipe', 'setupgs', 'docs', 'README.txt')
-    + '\n' +
-    'Contributors\n' 
-    '************\n'
-    + '\n' +
-    read('gs', 'recipe', 'setupgs', 'docs', 'CONTRIBUTORS.txt')
-    + '\n' +
-    'Change history\n'
-    '**************\n'
+    file(os.path.join('docs', 'CONTRIBUTORS.txt')).read()
     + '\n' + 
-    read('gs', 'recipe', 'setupgs', 'docs', 'CHANGES.txt')
+    file(os.path.join('docs', 'CHANGES.txt')).read()
     + '\n'
     )
 entry_point = 'gs.recipe.setupgs:Recipe'
