@@ -1,5 +1,5 @@
 # coding=utf-8
-import sys, transaction
+import sys, transaction, os
 from glob import glob
 from Testing import makerequest
 from AccessControl.SecurityManagement import newSecurityManager
