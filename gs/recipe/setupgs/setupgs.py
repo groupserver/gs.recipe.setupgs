@@ -11,7 +11,7 @@ import Products.XWFMailingListManager, Products.XWFChat,\
     Products.CustomUserFolder
 
 def get_sql_filenames_from_module(module):
-  path = os.path.join(module.__path__, 'sql')
+  path = os.path.join(os.path.join(*module.__path__), 'sql')
   retval = glob(os.path.join(path, '*sql'))
   assert type(retval) == list
   return retval
@@ -53,8 +53,8 @@ class SetupGS(object):
         
     def setup_database(self, user, host, port, sql_base, database):
         modules = (Products.XWFMailingListManager, Products.XWFChat, 
-            Products.GSAuditTrail, Products.GSGroupMember, Products.GSSearch,
-            Products.CustomUserFolder)            
+            Products.GSAuditTrail, Products.GSGroupMember,
+            Products.GSSearch, Products.CustomUserFolder)            
         for module in modules:
             for fname in get_sql_filenames_from_module(module):
                 s,o = execute_psql_with_file(user, host, port, database, 
