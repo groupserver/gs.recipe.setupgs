@@ -62,13 +62,11 @@ class SetupGS(object):
                 print ((o and o) or '.')
        
     def create_site(self, id, title, initial_user, initial_password,
-        support_email, timezone, canonicalHost, userVerificationEmail, 
-        registrationEmail, databaseHost, databasePort, databaseUsername,
-        databasePassword, databaseName): 
+        support_email, timezone, canonicalHost, databaseHost,
+        databasePort, databaseUsername, databasePassword, databaseName):
         
         manage_addGroupserverSite(self.app, id, title, initial_user, 
-            initial_password, support_email, timezone, canonicalHost, 
-            userVerificationEmail, registrationEmail, databaseHost,
-            databasePort, databaseUsername, databasePassword, 
-            databaseName)
+            initial_password, support_email, timezone, canonicalHost,
+            databaseHost, databasePort, databaseUsername,
+            databasePassword, databaseName)
 
