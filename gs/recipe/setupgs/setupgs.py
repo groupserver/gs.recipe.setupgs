@@ -51,7 +51,7 @@ class SetupGS(object):
     def create_database(self, user, host, port, database):
         execute_createdb(user, host, port, database)
         
-    def setup_database(self, user, host, port, sql_base, database):
+    def setup_database(self, user, host, port, database):
         modules = (Products.XWFMailingListManager, Products.XWFChat, 
             Products.GSAuditTrail, Products.GSGroupMember,
             Products.GSSearch, Products.CustomUserFolder)            

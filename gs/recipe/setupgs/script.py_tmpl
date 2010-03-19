@@ -23,7 +23,6 @@ setup.create_database('%(database_username)s',
 setup.setup_database( '%(database_username)s',
                       '%(database_host)s',
                       '%(database_port)s',
-                      '%(sql_base)s',
                       '%(database_name)s')
 
 setup.create_site('%(instance_id)s',

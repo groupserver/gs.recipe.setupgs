@@ -67,7 +67,6 @@ class Recipe(object):
         database_username = self.options['database_username']
         database_password = self.options['database_password']
         database_name = self.options['database_name']
-        sql_base = self.options['sql_base']
         
         template = template % locals()
         
@@ -81,3 +80,4 @@ class Recipe(object):
     def update(self):
         """Updater"""
         self.install()
+
