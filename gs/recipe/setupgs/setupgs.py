@@ -71,7 +71,7 @@ class SetupGS(object):
             databasePassword, databaseName)
         assert hasattr(self.app, id), '%s not found'
         assert hasattr(getattr(self.app, id), 'Content'), 'Content not found'
-        assert hasattr(getattr(getattr(self.app, id), 'Content')), 'example_site', 'example_site not found'
+        assert hasattr(getattr(getattr(self.app, id), 'Content'), 'example_site'), 'example_site not found'
         
         
         vhm = getattr(self.app, 'virtual_hosting', None)
