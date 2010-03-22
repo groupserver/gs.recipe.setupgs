@@ -59,8 +59,6 @@ class Recipe(object):
         gs_support_email = self.options['gs_support_email']
         gs_timezone = self.options['gs_timezone']
         gs_hostname = self.options['gs_hostname']
-        gs_verification_email = self.options['gs_verification_email']
-        gs_registration_email = self.options['gs_registration_email']
         database_host = self.options['database_host']
         database_port = self.options['database_port']
         database_admin = self.options['database_admin']
