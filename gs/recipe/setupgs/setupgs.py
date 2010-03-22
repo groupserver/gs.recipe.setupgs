@@ -69,7 +69,11 @@ class SetupGS(object):
             initial_password, support_email, timezone, canonicalHost,
             databaseHost, databasePort, databaseUsername,
             databasePassword, databaseName)
-
+        assert hasattr(self.app, id), '%s not found'
+        assert hasattr(getattr(self.app, id), 'Content'), 'Content not found'
+        assert hasattr(getattr(getattr(self.app, id), 'Content')), 'example_site', 'example_site not found'
+        
+        
         vhm = getattr(self.app, 'virtual_hosting', None)
         assert vhm, 'Could not find the VHM in %s' % self.app
         mappingD = {'host': canonicalHost,
