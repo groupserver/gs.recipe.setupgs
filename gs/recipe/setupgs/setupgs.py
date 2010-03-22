@@ -70,3 +70,12 @@ class SetupGS(object):
             databaseHost, databasePort, databaseUsername,
             databasePassword, databaseName)
 
+        vhm = getattr(self.app, 'virtual_hosting', None)
+        assert vhm, 'Could not find the VHM in %s' % self.app
+        mappingD = {'host': canonicalHost,
+                    'id': id,
+                    'site': 'example_site',
+                    'skin': '++skin++skin_gs_ogn'}
+        mapping = '%(host)s/%(id)s/Content/%(site)s/%(skin)s' % mappingD
+        vhm.set_map(mapping)
+
