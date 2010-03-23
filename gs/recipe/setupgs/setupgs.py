@@ -72,14 +72,14 @@ class SetupGS(object):
         assert hasattr(self.app, id), '%s not found'
         assert hasattr(getattr(self.app, id), 'Content'), 'Content not found'
         assert hasattr(getattr(getattr(self.app, id), 'Content'), 'example_site'), 'example_site not found'
-        
-        
+                
         vhm = getattr(self.app, 'virtual_hosting', None)
         assert vhm, 'Could not find the VHM in %s' % self.app
+        #'++skin++skin_gs_ogn' does not work during install
         mappingD = {'host': canonicalHost,
                     'id': id,
                     'site': 'example_site',
-                    'skin': '++skin++skin_gs_ogn'}
+                    'skin': ''} 
         mapping = '%(host)s/%(id)s/Content/%(site)s/%(skin)s' % mappingD
         vhm.set_map(mapping)
 
