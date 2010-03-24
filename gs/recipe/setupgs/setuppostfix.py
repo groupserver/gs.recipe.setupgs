@@ -46,7 +46,7 @@ class SetupPostfix(object):
             
         verifyAddress = 'verify-address:   '\
             '"|%(gsPath)s/utils/smtp2zope-nonautomatic.py '\
-            'http://%(domain)/acl_users/verify_address"\n' % subs
+            'http://%(domain)s/acl_users/verify_address"\n' % subs
         groupAutomatic = 'group-automagic:  '\
             '"|%(gsPath)s/utils/smtp2zope.py  '\
             'http://%(domain)s/ListManager"\n' % subs
