@@ -22,12 +22,16 @@ class SetupPostfix(object):
         scriptName = 'smtp2zope*py'
         
         moduleDir = join(*Products.XWFMailingListManager.__path__)
-        utilsSrc = join(moduleDir, utilsName)
+        utilsSrc = moduleDir
         
         utilsDest = join(self.pathToGroupServer, utilsName)
-        assert not(exists(utilsDest)), '%s already eists.' % utilsDest
-        mkdir(utilsDest)
+        if not exists(utilsDest):
+            mkdir(utilsDest)
         
+        print 'Copying'
+        print '\tsrc %s' % utilsSrc
+        print '\tscript name %s' % scriptName
+        print '\tAll together %s' % join(utilsSrc, scriptName)
         for util in glob(join(utilsSrc, scriptName)):
             print 'Copying %s to %s' % (util, utilsDest)
             copy(util, utilsDest)
@@ -39,7 +43,8 @@ class SetupPostfix(object):
     
     def create_postfix_config(self):
         configDest = join(self.pathToGroupServer, 'postfix_config')
-        mkdir(configDest)
+        if not exists(configDest):
+            mkdir(configDest)
         
         subs = {
             'gsPath': self.pathToGroupServer,
