@@ -35,7 +35,7 @@ class SetupPostfix(object):
             outfile = file(join(utilsDest, utilName), 'w')
             for line in infile.readlines():
                 if line == "AUTHORIZATION='admin:foobar'\n":
-                    line = "AUTHORIZATION='%s'\n" % adminName
+                    line = "AUTHORIZATION='%s'\n" % self.adminName
                 outfile.write(line)
             infile.close()
             outfile.close()
