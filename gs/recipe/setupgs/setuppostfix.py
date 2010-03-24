@@ -1,15 +1,15 @@
 #!/bin/python
 from os import mkdir, chmod
 from os.path import exists, join, abspath
-from shutil import copy
 from glob import glob
 import stat
 import Products.XWFMailingListManager
 
 class SetupPostfix(object):
-    def __init__(self, domainName):
+    def __init__(self, domainName, adminName):
         self.__pathToGroupServer = None
         self.domainName = domainName
+        self.adminName = adminName
     
     @property
     def pathToGroupServer(self):
@@ -27,10 +27,19 @@ class SetupPostfix(object):
         utilsDest = join(self.pathToGroupServer, utilsName)
         if not exists(utilsDest):
             mkdir(utilsDest)
-        
+            
+        # --=mpj17=-- Yes, Richard, this is a hack.
         for util in glob(join(utilsSrc, scriptName)):
-            copy(util, utilsDest)
-        
+            inFile = file(util, 'r')
+            utilName = split(util)[-1]
+            outFile = file(join(utilsDest, utilName), 'w')
+            for line in infile.readlines():
+                if line == "AUTHORIZATION='admin:foobar'\n":
+                    line = "AUTHORIZATION='%s'\n" % adminName
+                outFile.write(line)
+            infile.close()
+            outfile.close()
+            
         perms = stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | \
             stat.S_IRGRP | stat.S_IXGRP
         for util in glob(join(utilsDest, scriptName)):

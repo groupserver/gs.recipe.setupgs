@@ -52,6 +52,7 @@ class Recipe(object):
         template = open(template_file, 'r').read()
 
         zope_admin_name = self.options['zope_admin_name']
+        zope_admin = self.options['zope_admin']
         instance_id = self.options['instance_id']
         instance_title = self.options['instance_title']
         gs_admin_name = self.options['gs_admin_name']
