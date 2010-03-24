@@ -28,12 +28,7 @@ class SetupPostfix(object):
         if not exists(utilsDest):
             mkdir(utilsDest)
         
-        print 'Copying'
-        print '\tsrc %s' % utilsSrc
-        print '\tscript name %s' % scriptName
-        print '\tAll together %s' % join(utilsSrc, scriptName)
         for util in glob(join(utilsSrc, scriptName)):
-            print 'Copying %s to %s' % (util, utilsDest)
             copy(util, utilsDest)
         
         perms = stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | \
