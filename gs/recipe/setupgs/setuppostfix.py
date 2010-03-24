@@ -1,6 +1,6 @@
 #!/bin/python
 from os import mkdir, chmod
-from os.path import exists, join, abspath
+from os.path import exists, join, abspath, split
 from glob import glob
 import stat
 import Products.XWFMailingListManager
