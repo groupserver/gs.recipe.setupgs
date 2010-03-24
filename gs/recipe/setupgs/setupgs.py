@@ -72,7 +72,11 @@ class SetupGS(object):
         assert hasattr(self.app, id), '%s not found'
         assert hasattr(getattr(self.app, id), 'Content'), 'Content not found'
         assert hasattr(getattr(getattr(self.app, id), 'Content'), 'example_site'), 'example_site not found'
-                
+
+        # --=mpj17=-- A useless attemt at setting the virtual host 
+        #   mapping automatically. No matter what I do something
+        #   always blanks the mapping, making it impossible to set up
+        #   a GroupServer instance and site automatically.
         vhm = getattr(self.app, 'virtual_hosting', None)
         assert vhm, 'Could not find the VHM in %s' % self.app
         #'++skin++skin_gs_ogn' does not work during install
@@ -80,6 +84,6 @@ class SetupGS(object):
                     'id': id,
                     'site': 'example_site',
                     'skin': ''} 
-        mapping = '%(host)s/%(id)s/Content/%(site)s/%(skin)s' % mappingD
+        mapping = '%(host)s/%(id)s/Content/%(site)s/%(skin)s\n' % mappingD
         vhm.set_map(mapping)
 
