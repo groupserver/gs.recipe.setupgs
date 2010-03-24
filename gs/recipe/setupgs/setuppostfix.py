@@ -1,6 +1,6 @@
 #!/bin/python
 from os import mkdir, chmod
-from os.path import exists, join
+from os.path import exists, join, abspath
 from shutil import copy
 from glob import glob
 import stat
@@ -14,7 +14,7 @@ class SetupPostfix(object):
     @property
     def pathToGroupServer(self):
         if self.__pathToGroupServer == None:
-            self.__pathToGroupServer = '.'
+            self.__pathToGroupServer = abspath('.')
         return self.__pathToGroupServer
     
     def copy_utils(self):
@@ -58,7 +58,7 @@ class SetupPostfix(object):
         
         gsVirtualContents = '%(domain)s\tvirtual\n'\
             'verify@%(domain)s\tverify-address\n'\
-            '@%(domain)s\tgroup-automagic\n'
+            '@%(domain)s\tgroup-automagic\n' % subs
         fileName = join(configDest, 'groupserver.virtual')
         gsVirtual = file(fileName, 'w')
         gsVirtual.write(gsVirtualContents)
