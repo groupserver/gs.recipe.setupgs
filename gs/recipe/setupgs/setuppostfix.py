@@ -30,13 +30,13 @@ class SetupPostfix(object):
             
         # --=mpj17=-- Yes, Richard, this is a hack.
         for util in glob(join(utilsSrc, scriptName)):
-            inFile = file(util, 'r')
+            infile = file(util, 'r')
             utilName = split(util)[-1]
-            outFile = file(join(utilsDest, utilName), 'w')
+            outfile = file(join(utilsDest, utilName), 'w')
             for line in infile.readlines():
                 if line == "AUTHORIZATION='admin:foobar'\n":
                     line = "AUTHORIZATION='%s'\n" % adminName
-                outFile.write(line)
+                outfile.write(line)
             infile.close()
             outfile.close()
             
