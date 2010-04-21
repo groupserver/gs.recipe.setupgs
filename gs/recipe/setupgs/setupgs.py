@@ -13,6 +13,7 @@ import Products.XWFMailingListManager, Products.XWFChat,\
 def get_sql_filenames_from_module(module):
   path = os.path.join(os.path.join(*module.__path__), 'sql')
   retval = glob(os.path.join(path, '*sql'))
+  retval.sort()
   assert type(retval) == list
   return retval
     
