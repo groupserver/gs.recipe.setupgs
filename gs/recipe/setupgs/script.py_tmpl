@@ -40,7 +40,7 @@ setup.create_site('%(instance_id)s',
                   '%(database_password)s',
                   '%(database_name)s')
 
-postfixSetup = SetupPostfix(  '%(gs_hostname)s', 
+postfixSetup = SetupPostfix(  '%(gs_host)s', 
                               '%(zope_admin)s')
 postfixSetup.copy_utils()
 postfixSetup.create_postfix_config()
