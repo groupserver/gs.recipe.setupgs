@@ -63,16 +63,16 @@ class SetupGS(object):
                 print ((o and o) or '.')
        
     def create_site(self, id, title, admin_email, admin_password,
-        user_email, user_password, support_email, timezone, 
-        canonicalHost, canonicalPort, 
+        user_email, user_password, zope_admin_id, support_email, 
+        timezone, canonicalHost, canonicalPort, 
         databaseHost, databasePort, databaseUsername, databasePassword, 
         databaseName):
         
         manage_addGroupserverSite(self.app, id, title, admin_email, 
-            admin_password, user_email, user_password, support_email, 
-            timezone,  canonicalHost, canonicalPort, databaseHost, 
-            databasePort, databaseUsername, databasePassword, 
-            databaseName)
+            admin_password, user_email, user_password, zope_admin_id, 
+            support_email, timezone,  canonicalHost, canonicalPort, 
+            databaseHost, databasePort, databaseUsername, 
+            databasePassword, databaseName)
         assert hasattr(self.app, id), '%s not found'
         assert hasattr(getattr(self.app, id), 'Content'), 'Content not found'
         assert hasattr(getattr(getattr(self.app, id), 'Content'), 'example_site'), 'example_site not found'
