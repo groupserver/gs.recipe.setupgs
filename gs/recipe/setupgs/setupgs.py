@@ -65,12 +65,14 @@ class SetupGS(object):
     def create_site(self, id, title, admin_email, admin_password,
         user_email, user_password, zope_admin_id, support_email, 
         timezone, canonicalHost, canonicalPort, 
+        smtp_host, smtp_port, smtp_user, smtp_password,
         databaseHost, databasePort, databaseUsername, databasePassword, 
         databaseName):
         
         manage_addGroupserverSite(self.app, id, title, admin_email, 
             admin_password, user_email, user_password, zope_admin_id, 
             support_email, timezone,  canonicalHost, canonicalPort, 
+            smtp_host, smtp_port, smtp_user, smtp_password,
             databaseHost, databasePort, databaseUsername, 
             databasePassword, databaseName)
         assert hasattr(self.app, id), '%s not found'
