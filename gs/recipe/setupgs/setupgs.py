@@ -8,7 +8,7 @@ import commands
 
 import Products.XWFMailingListManager, Products.XWFChat,\
     Products.GSAuditTrail, Products.GSGroupMember, Products.GSSearch,\
-    Products.CustomUserFolder
+    Products.CustomUserFolder, gs.group.member.invite
 
 def get_sql_filenames_from_module(module):
   path = os.path.join(os.path.join(*module.__path__), 'sql')
@@ -55,7 +55,8 @@ class SetupGS(object):
     def setup_database(self, user, host, port, database):
         modules = (Products.XWFMailingListManager, Products.XWFChat, 
             Products.GSAuditTrail, Products.GSGroupMember,
-            Products.GSSearch, Products.CustomUserFolder)            
+            Products.GSSearch, Products.CustomUserFolder, 
+            gs.group.member.invite)
         for module in modules:
             for fname in get_sql_filenames_from_module(module):
                 s,o = execute_psql_with_file(user, host, port, database, 
