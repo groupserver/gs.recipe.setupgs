@@ -6,9 +6,9 @@ from AccessControl.SecurityManagement import newSecurityManager
 from Products.GroupServer.groupserver import manage_addGroupserverSite
 import commands
 
-import Products.XWFMailingListManager, Products.XWFChat,\
-    Products.GSAuditTrail, Products.GSGroupMember, Products.GSSearch,\
-    Products.CustomUserFolder, gs.group.member.invite
+import Products.CustomUserFolder, Products.XWFMailingListManager,\
+    Products.GSAuditTrail, gs.group.member.invite, gs.profile.invite,\
+    Products.GSSearch, Products.GSGroupMember, Products.XWFChat
 
 def get_sql_filenames_from_module(module):
   path = os.path.join(os.path.join(*module.__path__), 'sql')
@@ -53,10 +53,11 @@ class SetupGS(object):
         execute_createdb(user, host, port, database)
         
     def setup_database(self, user, host, port, database):
-        modules = (Products.XWFMailingListManager, Products.XWFChat, 
-            Products.GSAuditTrail, Products.GSGroupMember,
-            Products.GSSearch, Products.CustomUserFolder, 
-            gs.group.member.invite)
+        modules = (Products.CustomUserFolder, 
+                    Products.XWFMailingListManager, Products.GSAuditTrail, 
+                    gs.group.member.invite, gs.profile.invite, 
+                    Products.GSSearch, Products.GSGroupMember, 
+                    Products.XWFChat)
         for module in modules:
             for fname in get_sql_filenames_from_module(module):
                 s,o = execute_psql_with_file(user, host, port, database, 
