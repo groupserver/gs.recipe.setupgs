@@ -1,24 +1,23 @@
 # coding=utf-8
-import sys, transaction, os
+import transaction, os
 from glob import glob
 from Testing import makerequest
 from AccessControl.SecurityManagement import newSecurityManager
 from Products.GroupServer.groupserver import manage_addGroupserverSite
 import commands
 
-# TODO: d gs.profile.email.base
+# TODO: add gs.profile.email.base
 import Products.CustomUserFolder, Products.XWFMailingListManager,\
-    Products.GSAuditTrail, Products.XWFChat, Products.GSGroupMember, \
-    gs.profile.email.verify, 
-    gs.group.member.invite, gs.profile.invite, gs.profile.password,\
-    Products.GSSearch
+    Products.GSAuditTrail, gs.group.member.invite, gs.profile.invite,\
+    gs.profile.password, gs.profile.email.verify, Products.GSSearch, \
+    Products.GSGroupMember, Products.XWFChat
 
 def get_sql_filenames_from_module(module):
-  path = os.path.join(os.path.join(*module.__path__), 'sql')
-  retval = glob(os.path.join(path, '*sql'))
-  retval.sort()
-  assert type(retval) == list
-  return retval
+    path = os.path.join(os.path.join(*module.__path__), 'sql')
+    retval = glob(os.path.join(path, '*sql'))
+    retval.sort()
+    assert type(retval) == list
+    return retval
     
 def execute_createuser(admin, user, host, port):
     cmd = 'createuser -d -r -l -S -U %s -h %s -p %s %s' %\
@@ -59,9 +58,9 @@ class SetupGS(object):
         # TODO: add gs.profile.email.base
         modules = (Products.CustomUserFolder, 
                     Products.XWFMailingListManager, Products.GSAuditTrail, 
-                    gs.profile.email.verify,
                     gs.group.member.invite, gs.profile.invite, 
-                    gs.profile.password, Products.GSSearch, 
+                    gs.profile.password, gs.profile.email.verify, 
+                    Products.GSSearch,
                     Products.GSGroupMember, Products.XWFChat)
         for module in modules:
             for fname in get_sql_filenames_from_module(module):
@@ -86,7 +85,7 @@ class SetupGS(object):
         assert hasattr(getattr(self.app, id), 'Content'), 'Content not found'
         assert hasattr(getattr(getattr(self.app, id), 'Content'), 'example_site'), 'example_site not found'
 
-        # --=mpj17=-- A useless attemt at setting the virtual host 
+        # --=mpj17=-- A useless attempt at setting the virtual host 
         #   mapping automatically. No matter what I do something
         #   always blanks the mapping, making it impossible to set up
         #   a GroupServer instance and site automatically.
