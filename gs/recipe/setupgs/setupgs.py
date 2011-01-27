@@ -56,12 +56,12 @@ class SetupGS(object):
         
     def setup_database(self, user, host, port, database):
         # TODO: add gs.profile.email.base
-        modules = (Products.CustomUserFolder, 
+        modules = (gs.profile.email.base, Products.CustomUserFolder, 
                     Products.XWFMailingListManager, Products.GSAuditTrail, 
-                    gs.profile.email.base, gs.group.member.invite,
-                    gs.profile.invite, gs.profile.password,
-                    gs.profile.email.verify, Products.GSSearch,
-                    Products.GSGroupMember, Products.XWFChat)
+                    gs.group.member.invite, gs.profile.invite, 
+                    gs.profile.password, gs.profile.email.verify, 
+                    Products.GSSearch, Products.GSGroupMember, 
+                    Products.XWFChat)
         for module in modules:
             for fname in get_sql_filenames_from_module(module):
                 s,o = execute_psql_with_file(user, host, port, database, 
