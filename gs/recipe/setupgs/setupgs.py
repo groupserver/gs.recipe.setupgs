@@ -7,7 +7,7 @@ from Products.GroupServer.groupserver import manage_addGroupserverSite
 import commands
 
 import Products.CustomUserFolder, Products.XWFMailingListManager,\
-    Products.GSAuditTrail, gs.profile.email.base,
+    Products.GSAuditTrail, gs.profile.email.base,\
     gs.group.member.invite, gs.profile.invite,\
     gs.profile.password, gs.profile.email.verify, Products.GSSearch, \
     Products.GSGroupMember, Products.XWFChat
