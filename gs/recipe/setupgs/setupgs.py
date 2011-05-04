@@ -9,7 +9,7 @@ import commands
 import Products.CustomUserFolder, gs.group.messages.post, \
     gs.group.messages.topic, Products.XWFMailingListManager,\
     Products.GSAuditTrail, gs.profile.email.base,\
-    gs.group.member.invite, gs.profile.invite,\
+    gs.group.member.invite, gs.profile.invite, gs.group.member.request,\
     gs.profile.password, gs.profile.email.verify, Products.GSSearch, \
     Products.GSGroupMember, Products.XWFChat
 
@@ -60,8 +60,9 @@ class SetupGS(object):
           gs.group.messages.post, gs.group.messages.topic,
           Products.XWFMailingListManager, Products.GSAuditTrail, 
           gs.group.member.invite, gs.profile.invite, 
-          gs.profile.password, gs.profile.email.verify, 
-          Products.GSSearch, Products.GSGroupMember, Products.XWFChat)
+          gs.group.member.request, gs.profile.password, 
+          gs.profile.email.verify, Products.GSSearch, 
+          Products.GSGroupMember, Products.XWFChat)
         for module in modules:
             for fname in get_sql_filenames_from_module(module):
                 s,o = execute_psql_with_file(user, host, port, database, 
