@@ -13,6 +13,8 @@ import Products.CustomUserFolder, gs.group.messages.post, \
     gs.profile.password, gs.profile.email.verify, Products.GSSearch, \
     Products.GSGroupMember, Products.XWFChat
 
+SITE_ID = 'initial_site'
+
 def get_sql_filenames_from_module(module):
     path = os.path.join(os.path.join(*module.__path__), 'sql')
     retval = glob(os.path.join(path, '*sql'))
@@ -84,18 +86,14 @@ class SetupGS(object):
             databasePassword, databaseName)
         assert hasattr(self.app, id), '%s not found'
         assert hasattr(getattr(self.app, id), 'Content'), 'Content not found'
-        assert hasattr(getattr(getattr(self.app, id), 'Content'), 'example_site'), 'example_site not found'
+        assert hasattr(getattr(getattr(self.app, id), 'Content'), SITE_ID), '%s not found' % SITE_ID
 
-        # --=mpj17=-- A useless attempt at setting the virtual host 
-        #   mapping automatically. No matter what I do something
-        #   always blanks the mapping, making it impossible to set up
-        #   a GroupServer instance and site automatically.
         vhm = getattr(self.app, 'virtual_hosting', None)
         assert vhm, 'Could not find the VHM in %s' % self.app
         #'++skin++skin_gs_ogn' does not work during install
         mappingD = {'host': canonicalHost,
                     'id': id,
-                    'site': 'example_site',
+                    'site': SITE_ID,
                     'skin': ''} 
         mapping = '%(host)s/%(id)s/Content/%(site)s/%(skin)s\n' % mappingD
         vhm.set_map(mapping)
