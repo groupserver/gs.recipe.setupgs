@@ -6,7 +6,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 from Products.GroupServer.groupserver import manage_addGroupserverSite
 import commands
 
-import Products.CustomUserFolder, gs.group.messages.post, \
+import gs.option, Products.CustomUserFolder, gs.group.messages.post, \
     gs.group.messages.topic, Products.XWFMailingListManager,\
     Products.GSAuditTrail, gs.profile.email.base,\
     gs.group.member.invite, gs.profile.invite, gs.group.member.request,\
@@ -58,11 +58,11 @@ class SetupGS(object):
         execute_createdb(user, host, port, database)
         
     def setup_database(self, user, host, port, database):
-        modules = (gs.profile.email.base, Products.CustomUserFolder, 
-          gs.group.messages.post, gs.group.messages.topic,
-          Products.XWFMailingListManager, Products.GSAuditTrail, 
-          gs.group.member.invite, gs.profile.invite, 
-          gs.group.member.request, gs.profile.password, 
+        modules = (gs.option, gs.profile.email.base, 
+          Products.CustomUserFolder, gs.group.messages.post, 
+          gs.group.messages.topic, Products.XWFMailingListManager, 
+          Products.GSAuditTrail, gs.group.member.invite, 
+          gs.profile.invite, gs.group.member.request, gs.profile.password,
           gs.profile.email.verify, Products.GSSearch, 
           Products.GSGroupMember, Products.XWFChat)
         for module in modules:
