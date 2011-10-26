@@ -30,6 +30,10 @@ class SetupPostfix(object):
             mkdir(utilsDest)
             
         # --=mpj17=-- Yes, Richard, this is a hack.
+        subs = {
+          'gsPath':   self.pathToGroupServer,
+          'listPath': moduleDir
+        }
         for util in glob(join(utilsSrc, scriptName)):
             infile = file(util, 'r')
             utilName = split(util)[-1]
@@ -37,6 +41,10 @@ class SetupPostfix(object):
             for line in infile.readlines():
                 if line == "AUTHORIZATION='admin:foobar'\n":
                     line = "AUTHORIZATION='%s'\n" % self.adminName
+                elif line == 'from stat import ST_NLINK, ST_MTIME'
+                    line = '''from stat import ST_NLINK, ST_MTIME
+sys.path.append("%(gsPath)s/utils/")
+sys.path.append("%(listPath)s")\n''' % subs
                 outfile.write(line)
             infile.close()
             outfile.close()
