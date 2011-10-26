@@ -58,10 +58,10 @@ class SetupPostfix(object):
             
         verifyAddress = 'verify-address:   '\
             '"|%(gsPath)s/bin/python %(gsPath)s/utils/smtp2zope-nonautomatic.py '\
-            'http://%(domain)s:%{port}/acl_users/verify_address"\n' % subs
+            'http://%(domain)s:%(port)s/acl_users/verify_address"\n' % subs
         groupAutomatic = 'group-automagic:  '\
             '"|%(gsPath)s/bin/python  %(gsPath)s/utils/smtp2zope.py  '\
-            'http://%(domain)s:%{port}/ListManager"\n' % subs
+            'http://%(domain)s:%(port)s/ListManager"\n' % subs
         fileName = join(configDest, 'groupserver.aliases')
         gsAliases = file(fileName, 'w')
         gsAliases.write(verifyAddress)
