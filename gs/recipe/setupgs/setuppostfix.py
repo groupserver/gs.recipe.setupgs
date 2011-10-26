@@ -41,7 +41,7 @@ class SetupPostfix(object):
             for line in infile.readlines():
                 if line == "AUTHORIZATION='admin:foobar'\n":
                     line = "AUTHORIZATION='%s'\n" % self.adminName
-                elif line == 'from stat import ST_NLINK, ST_MTIME':
+                elif line == 'from stat import ST_NLINK, ST_MTIME\n':
                     line = '''from stat import ST_NLINK, ST_MTIME
 sys.path.append("%(gsPath)s/utils/")
 sys.path.append("%(listPath)s")\n''' % subs
