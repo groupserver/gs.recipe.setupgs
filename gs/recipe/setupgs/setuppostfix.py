@@ -6,9 +6,10 @@ import stat
 import Products.XWFMailingListManager
 
 class SetupPostfix(object):
-    def __init__(self, domainName, adminName):
+    def __init__(self, domainName, port, adminName):
         self.__pathToGroupServer = None
         self.domainName = domainName
+        self.port = port
         self.adminName = adminName
     
     @property
@@ -52,14 +53,15 @@ class SetupPostfix(object):
         
         subs = {
             'gsPath': self.pathToGroupServer,
-            'domain': self.domainName}
+            'domain': self.domainName,
+            'port':   self.port}
             
         verifyAddress = 'verify-address:   '\
             '"|%(gsPath)s/utils/smtp2zope-nonautomatic.py '\
-            'http://%(domain)s/acl_users/verify_address"\n' % subs
+            'http://%(domain)s:%{port}/acl_users/verify_address"\n' % subs
         groupAutomatic = 'group-automagic:  '\
             '"|%(gsPath)s/utils/smtp2zope.py  '\
-            'http://%(domain)s/ListManager"\n' % subs
+            'http://%(domain)s:%{port}/ListManager"\n' % subs
         fileName = join(configDest, 'groupserver.aliases')
         gsAliases = file(fileName, 'w')
         gsAliases.write(verifyAddress)
