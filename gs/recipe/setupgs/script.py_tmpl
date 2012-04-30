@@ -11,16 +11,6 @@ from gs.recipe.setupgs.setuppostfix import SetupPostfix
 setup = SetupGS(app=app,
                 zope_admin_name='%(zope_admin_name)s')
 
-setup.create_database_user( '%(database_admin)s',
-                            '%(database_username)s',
-                            '%(database_host)s',
-                            '%(database_port)s')   
-
-setup.create_database('%(database_username)s',
-                      '%(database_host)s',
-                      '%(database_port)s',
-                      '%(database_name)s')
-
 setup.setup_database( '%(database_username)s',
                       '%(database_host)s',
                       '%(database_port)s',
