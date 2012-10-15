@@ -10,7 +10,7 @@ import gs.group.member.invite.base, gs.group.member.request, \
     gs.group.messages.post, gs.group.messages.topic,\
     gs.option, gs.profile.email.base, gs.profile.email.verify,\
     gs.profile.password, Products.CustomUserFolder, Products.GSAuditTrail,\
-    Products.GroupMember, Products.XWFMailingListManager
+    Products.GSGroupMember, Products.XWFMailingListManager
 
 SITE_ID = 'initial_site'
 
