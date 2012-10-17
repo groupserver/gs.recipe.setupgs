@@ -39,8 +39,8 @@ class Recipe(object):
             if os.path.exists(self.fileName):
                 m = '''
 *********************************************************************
-Skipped: The setup script [%s] has already been run. If
-you want to run it again set the run-once option to false or delete
+Skipped: The setup script %s has already been run. If you want
+to run it again set the run-once option to false or delete
 %s
 *********************************************************************\n\n''' %\
                     (self.name, self.fileName)
@@ -106,8 +106,10 @@ you want to run it again set the run-once option to false or delete
                     self.mark_locked()
                     sys.stdout.write('GroupServer site created\n\n')
                 else:
-                    m = '%s: Issue running\n\t%s\nReturned %s' %\
+                    m = '%s: Issue running\n\t%s\nReturned %s\n' %\
                         (self.name, command, retcode)
+                    sys.stderr.write(m)
+                    sys.exit(1)
             except OSError, e:
                 m = '%s: Failed to run\n\t%s\n%s\n' % (self.name, command, e)
                 sys.stderr.write(m)
