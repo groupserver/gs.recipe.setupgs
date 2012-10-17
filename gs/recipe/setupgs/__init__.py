@@ -22,30 +22,36 @@ class Recipe(object):
 
     def __init__(self, buildout, name, options):
         self.buildout, self.name, self.options = buildout, name, options
+        self.fileName = os.path.join(self.buildout['buildout']['directory'],
+                                     'var', "%s.cfg" % self.name)
 
         # suppress script generation
         self.options['scripts'] = ''
         options['bin-directory'] = buildout['buildout']['bin-directory']
 
-    def install(self):
-        """Installer"""
-        runonce = 'run-once' in self.options and \
-                   self.options['run-once'].lower() or 'true'
+    def should_run(self):
+        runonce = ((('run-once' in self.options)
+                    and self.options['run-once'].lower()) or 'true')
         #We'll use the existance of this file as flag for the run-once option
-        file_name = os.path.join(self.buildout['buildout']['directory'],
-                                 'var', "%s.cfg" % self.name)
-
+        retval = True  # Uncharactistic optomisim
         if runonce not in ['false', 'off', 'no']:
-            if os.path.exists(file_name):
-                print "\n************************************************"
-                print "Skipped: [%s] has already been run" % self.name
-                print "If you want to run it again set the run-once option"
-                print "to false or delete %s" % file_name
-                print "************************************************\n"
-                return
-            else:
-                file(file_name, 'w').write('1')
+            if os.path.exists(self.fileName):
+                m = '''
+*********************************************************************
+Skipped: The setup script [%s] has already been run. If
+you want to run it again set the run-once option to false or delete
+%s
+*********************************************************************\n\n''' %\
+                    (self.name, self.fileName)
+                sys.stdout.write(m)
+                retval = False
+        return retval
 
+    def mark_locked(self):
+            with file(self.fileName, 'w') as lockfile:
+                lockfile.write('1')
+
+    def get_script(self):
         # The following assignments look like the are unused, but they are
         # utilised by the locals() magic below:
         #lint:disable
@@ -75,16 +81,28 @@ class Recipe(object):
         database_name = self.options['database_name']
         #lint:enable
 
-        template_file = os.path.join(os.path.dirname(__file__),
+        templateFileName = os.path.join(os.path.dirname(__file__),
                                         'script.py_tmpl').replace("\\", "/")
-        template = open(template_file, 'r').read()
-        template = template % locals()
-        tmp_file = tempfile.mktemp().replace("\\", "/")
-        file(tmp_file, 'w').write(template)
+        with file(templateFileName, 'r') as infile:
+            template = infile.read()
+        template = template % locals()  # Magic
 
-        instance_ctl = os.path.join(self.buildout['buildout']['bin-directory'],
-                                    'instance')
-        os.system(quote_command([instance_ctl, "run", tmp_file]))
+        retval = tempfile.mktemp().replace("\\", "/")
+        with file(retval, 'w') as outfile:
+            outfile.write(template)
+        return retval
+
+    def install(self):
+        """Installer"""
+        if self.should_run():
+            installScript = self.get_script()
+            binDir = self.buildout['buildout']['bin-directory']
+            instanceCommand = os.path.join(binDir, 'instance')
+
+            os.system(quote_command([instanceCommand, "run", installScript]))
+
+            self.mark_locked()
+            sys.stdout.write('GroupServer site created\n\n')
 
         return tuple()
 
