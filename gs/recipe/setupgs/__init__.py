@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Recipe setupgs. Many thanks to the collective.recipe.updateplone authors :) """
+"""Recipe setupgs. Many thanks to the collective.recipe.updateplone authors
+   :) """
 
 import os
 import tempfile

@@ -6,15 +6,9 @@ print recipe_egg_path
 sys.path.insert(0, recipe_egg_path)
 
 from gs.recipe.setupgs.setupgs import SetupGS 
-from gs.recipe.setupgs.setuppostfix import SetupPostfix
 
 setup = SetupGS(app=app,
                 zope_admin_name='%(zope_admin_name)s')
-
-setup.setup_database( '%(database_username)s',
-                      '%(database_host)s',
-                      '%(database_port)s',
-                      '%(database_name)s')
 
 setup.create_site('%(instance_id)s',
                   '%(instance_title)s',
@@ -36,10 +30,3 @@ setup.create_site('%(instance_id)s',
                   '%(database_username)s',
                   '%(database_password)s',
                   '%(database_name)s')
-
-postfixSetup = SetupPostfix(  '%(gs_host)s',
-                              '%(gs_port)s',
-                              '%(zope_admin)s')
-postfixSetup.copy_utils()
-postfixSetup.create_postfix_config()
-
