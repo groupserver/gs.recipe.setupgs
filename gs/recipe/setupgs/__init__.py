@@ -2,8 +2,9 @@
 """Recipe setupgs. Many thanks to the collective.recipe.updateplone authors
    :) """
 import os
-import tempfile
+from subprocess import call
 import sys
+import tempfile
 
 
 def quote_command(command):
@@ -98,11 +99,19 @@ you want to run it again set the run-once option to false or delete
             installScript = self.get_script()
             binDir = self.buildout['buildout']['bin-directory']
             instanceCommand = os.path.join(binDir, 'instance')
-
-            os.system(quote_command([instanceCommand, "run", installScript]))
-
-            self.mark_locked()
-            sys.stdout.write('GroupServer site created\n\n')
+            command = quote_command([instanceCommand, "run", installScript])
+            try:
+                retcode = call(command, shell=True)
+                if retcode == 0:
+                    self.mark_locked()
+                    sys.stdout.write('GroupServer site created\n\n')
+                else:
+                    m = '%s: Issue running\n\t%s\nReturned %s' %\
+                        (self.name, command, retcode)
+            except OSError, e:
+                m = '%s: Failed to run\n\t%s\n%s\n' % (self.name, command, e)
+                sys.stderr.write(m)
+                sys.exit(1)
 
         return tuple()
 
