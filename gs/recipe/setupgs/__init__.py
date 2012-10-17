@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 """Recipe setupgs. Many thanks to the collective.recipe.updateplone authors
    :) """
-
 import os
 import tempfile
 import sys
+
 
 def quote_command(command):
     # Quote the program name, so it works even if it contains spaces
     command = " ".join(['"%s"' % x for x in command])
     if sys.platform[:3].lower() == 'win':
-        # odd, but true: the windows cmd processor can't handle more than 
-        # one quoted item per string unless you add quotes around the 
-        # whole line. 
-        command = '"%s"' % command 
+        # odd, but true: the windows cmd processor can't handle more than
+        # one quoted item per string unless you add quotes around the
+        # whole line.
+        command = '"%s"' % command
     return command
+
 
 class Recipe(object):
     """zc.buildout recipe"""
@@ -44,14 +45,12 @@ class Recipe(object):
                 return
             else:
                 file(file_name, 'w').write('1')
-        
-        instance_ctl = os.path.join(self.buildout['buildout']['bin-directory'],
-                                    'instance')
-        
-        recipe_egg_path = os.path.dirname(__file__)[:-len(self.options['recipe'])].replace("\\","/")
-        template_file = os.path.join(os.path.dirname(__file__), 'script.py_tmpl').replace("\\","/")
-        template = open(template_file, 'r').read()
 
+        # The following assignments look like the are unused, but they are
+        # utilised by the locals() magic below:
+        #lint:disable
+        f = os.path.dirname(__file__)
+        recipe_egg_path = f[:-len(self.options['recipe'])].replace("\\", "/")
         zope_admin_name = self.options['zope_admin_name']
         zope_admin = self.options['zope_admin']
         instance_id = self.options['instance_id']
@@ -74,17 +73,21 @@ class Recipe(object):
         database_username = self.options['database_username']
         database_password = self.options['database_password']
         database_name = self.options['database_name']
-        
+        #lint:enable
+
+        template_file = os.path.join(os.path.dirname(__file__),
+                                        'script.py_tmpl').replace("\\", "/")
+        template = open(template_file, 'r').read()
         template = template % locals()
-        
-        tmp_file = tempfile.mktemp().replace("\\","/")
+        tmp_file = tempfile.mktemp().replace("\\", "/")
         file(tmp_file, 'w').write(template)
-                
+
+        instance_ctl = os.path.join(self.buildout['buildout']['bin-directory'],
+                                    'instance')
         os.system(quote_command([instance_ctl, "run", tmp_file]))
-        
+
         return tuple()
 
     def update(self):
         """Updater"""
         self.install()
-
