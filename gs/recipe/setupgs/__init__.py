@@ -1,4 +1,17 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright © 2009, 2010, 2011, 2012, 2013, 2014 OnlineGroups.net and
+# Contributors. All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
 """Recipe setupgs. Many thanks to the collective.recipe.updateplone authors
    :) """
 import os
@@ -110,7 +123,7 @@ to run it again set the run-once option to false or delete
                         (self.name, command, retcode)
                     sys.stderr.write(m)
                     sys.exit(1)
-            except OSError, e:
+            except OSError as e:
                 m = '%s: Failed to run\n\t%s\n%s\n' % (self.name, command, e)
                 sys.stderr.write(m)
                 sys.exit(1)
