@@ -57,6 +57,9 @@ class TestScriptCreation(TestCase):
         self.options['database_name'] = 'ethyl_the_frog'
         self.recipe = Recipe(self.buildout, self.name, self.options)
 
+        gs.recipe.setupgs.sys.stdout = mock.MagicMock()
+        gs.recipe.setupgs.sys.stderr = mock.MagicMock()
+
     def tearDown(self):
         rmtree(self.tempdir)
 
@@ -135,9 +138,23 @@ class TestScriptCreation(TestCase):
         self.assertIn(self.tempdir, r)
 
     def test_install_success(self):
+        # Note that 0 is success for a command in the Unix shell
         gs.recipe.setupgs.subprocess.call = mock.MagicMock(return_value=0)
+        t = self.recipe.install()
+        self.assertEqual(1, gs.recipe.setupgs.subprocess.call.call_count)
+        args, kw_args = gs.recipe.setupgs.subprocess.call.call_args
+        self.assertIn('instance', args[0])
+        self.assertEqual(t, tuple())
+
+    def test_install_fail(self):
+        # Note that 1 is failure for a command in the Unix shell
+        gs.recipe.setupgs.sys.exit = mock.MagicMock()
+        gs.recipe.setupgs.subprocess.call = mock.MagicMock(return_value=1)
         self.recipe.install()
         self.assertEqual(1, gs.recipe.setupgs.subprocess.call.call_count)
+        gs.recipe.setupgs.sys.exit.assert_called_with(1)
+        args, kw_args = gs.recipe.setupgs.sys.stderr.write.call_args
+        self.assertIn('Issue running', args[0])
 
 if __name__ == '__main__':
     unittest_main()
