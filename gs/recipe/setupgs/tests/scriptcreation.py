@@ -68,7 +68,7 @@ class TestScriptCreation(TestCase):
         the should_run method to return True.'''
         self.recipe.options = {'run-once': val}
         with open(self.recipe.fileName, 'w') as togglefile:
-            togglefile.write(b'1')
+            togglefile.write('1')
         r = self.recipe.should_run()
         self.assertTrue(r)
 
@@ -92,7 +92,7 @@ class TestScriptCreation(TestCase):
     def test_should_run_file(self):
         '''Test if should_run returns False if there is a toggle-file'''
         with open(self.recipe.fileName, 'w') as togglefile:
-            togglefile.write(b'1')
+            togglefile.write('1')
         r = self.recipe.should_run()
         self.assertFalse(r)
 
