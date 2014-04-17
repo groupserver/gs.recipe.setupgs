@@ -18,6 +18,8 @@ from os.path import exists
 from shutil import rmtree
 from tempfile import mkdtemp
 from unittest import TestCase, main as unittest_main
+import mock
+import gs.recipe.setupgs
 from gs.recipe.setupgs import Recipe
 
 
@@ -131,6 +133,11 @@ class TestScriptCreation(TestCase):
         self.assertIn('instance', r)
         self.assertIn('run', r)
         self.assertIn(self.tempdir, r)
+
+    def test_install_success(self):
+        gs.recipe.setupgs.subprocess.call = mock.MagicMock(return_value=0)
+        self.recipe.install()
+        self.assertEqual(1, gs.recipe.setupgs.subprocess.call.call_count)
 
 if __name__ == '__main__':
     unittest_main()

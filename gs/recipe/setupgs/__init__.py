@@ -16,7 +16,7 @@
    :) """
 import os
 from string import Template
-from subprocess import call
+import subprocess
 import sys
 import tempfile
 
@@ -134,7 +134,7 @@ to run it again set the run-once option to false or delete
         if self.should_run():
             command = self.get_script_command()
             try:
-                retcode = call(command, shell=True)
+                retcode = subprocess.call(command, shell=True)
                 if retcode == 0:
                     self.mark_locked()
                     sys.stdout.write('GroupServer site created\n\n')
