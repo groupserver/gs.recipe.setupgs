@@ -22,39 +22,45 @@ from version import get_version
 version = get_version()
 
 long_description = (
-    file('README.txt').read()
+    open('README.txt').read()
     + '\n' +
-    file(os.path.join('docs', 'CONTRIBUTORS.txt')).read()
+    open(os.path.join('docs', 'CONTRIBUTORS.txt')).read()
     + '\n' +
-    file(os.path.join('docs', 'CHANGES.txt')).read()
+    open(os.path.join('docs', 'CHANGES.txt')).read()
     + '\n'
     )
 entry_point = 'gs.recipe.setupgs:Recipe'
 entry_points = {"zc.buildout": ["default = %s" % entry_point]}
 
-tests_require = ['zope.testing', 'zc.buildout']
+tests_require = ['zope.testing', 'zc.buildout', 'mock']
 
 setup(name='gs.recipe.setupgs',
       version=version,
       description="Setup GroupServer instance in Zope",
       long_description=long_description,
       classifiers=[
+        'Development Status :: 5 - Production/Stable',
         'Framework :: Buildout',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: Zope Public License',
-        "Development Status :: 4 - Beta",
-        "License :: Other/Proprietary License",
         "Natural Language :: English",
         "Operating System :: POSIX :: Linux"
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
         ],
       keywords='zope groupserver recipe setup instance',
-      author='Richard Waid',
-      author_email='richard@onlinegroups.net',
+      author='Michael JasonSmith',
+      author_email='mpj17@onlinegroups.net',
       url='',
-      license='ZPL',
+      license='ZPL 2.1',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['gs', 'gs.recipe'],
       include_package_data=True,
@@ -62,20 +68,6 @@ setup(name='gs.recipe.setupgs',
       install_requires=[
         'setuptools',
         'zc.buildout',
-        'AccessControl',
-        'gs.group.member.invite.base',
-        'gs.group.member.request',
-        'gs.group.messages.post',
-        'gs.group.messages.topic',
-        'gs.option',
-        'gs.profile.email.base',
-        'gs.profile.email.verify',
-        'gs.profile.password',
-        'Products.CustomUserFolder',
-        'Products.GroupServer',
-        'Products.GSAuditTrail',
-        'Products.GSGroupMember',
-        'Products.XWFMailingListManager',
         ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
