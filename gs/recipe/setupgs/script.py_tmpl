@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 import sys
 
-recipe_egg_path = '%(recipe_egg_path)s'
+recipe_egg_path = '$recipe_egg_path'
 print recipe_egg_path
 
 sys.path.insert(0, recipe_egg_path)
@@ -8,25 +9,22 @@ sys.path.insert(0, recipe_egg_path)
 from gs.recipe.setupgs.setupgs import SetupGS 
 
 setup = SetupGS(app=app,
-                zope_admin_name='%(zope_admin_name)s')
+                zope_admin_name='$zope_admin_name')
 
-setup.create_site('%(instance_id)s',
-                  '%(instance_title)s',
-                  '%(gs_admin_email)s',
-                  '%(gs_admin_password)s',
-                  '%(gs_user_email)s',
-                  '%(gs_user_password)s',
-                  '%(zope_admin_name)s',
-                  '%(gs_support_email)s',
-                  '%(gs_timezone)s',
-                  '%(gs_host)s',
-                  '%(gs_port)s',
-                  '%(gs_smtp_host)s',
-                  '%(gs_smtp_port)s',
-                  '%(gs_smtp_user)s',
-                  '%(gs_smtp_password)s',
-                  '%(database_host)s',
-                  '%(database_port)s',
-                  '%(database_username)s',
-                  '%(database_password)s',
-                  '%(database_name)s')
+setup.create_site('$instance_id',
+                  '$instance_title',
+                  '$gs_admin_email',
+                  '$gs_admin_password',
+                  '$zope_admin_name',
+                  '$gs_timezone',
+                  '$gs_host',
+                  '$gs_port',
+                  '$gs_smtp_host',
+                  '$gs_smtp_port',
+                  '$gs_smtp_user',
+                  '$gs_smtp_password',
+                  '$database_host',
+                  '$database_port',
+                  '$database_username',
+                  '$database_password',
+                  '$database_name')

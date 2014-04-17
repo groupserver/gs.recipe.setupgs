@@ -2,11 +2,12 @@
 """
 Doctest runner for 'gs.recipe.setupgs'.
 """
+from __future__ import absolute_import, unicode_literals
 import unittest
 import zc.buildout.tests
 import zc.buildout.testing
-
 from zope.testing import doctest, renormalizing
+from gs.recipe.setupgs.tests.scriptcreation import TestScriptCreation
 
 optionflags = (doctest.ELLIPSIS |
                 doctest.NORMALIZE_WHITESPACE |
@@ -41,6 +42,7 @@ def test_suite():
                         ]),
                 ),
             ))
+    suite.addTest(TestScriptCreation)
     return suite
 
 if __name__ == '__main__':
