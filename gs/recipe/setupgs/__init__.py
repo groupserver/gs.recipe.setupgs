@@ -19,6 +19,7 @@ from string import Template
 import subprocess
 import sys
 import tempfile
+from zc.buildout import UserError
 
 
 class Recipe(object):
@@ -141,12 +142,10 @@ to run it again set the run-once option to false or delete
                 else:
                     m = '%s: Issue running\n\t%s\nReturned %s\n' %\
                         (self.name, command, retcode)
-                    sys.stderr.write(m)
-                    sys.exit(1)
+                    raise UserError(m)
             except OSError as e:
                 m = '%s: Failed to run\n\t%s\n%s\n' % (self.name, command, e)
-                sys.stderr.write(m)
-                sys.exit(1)
+                raise UserError(m)
 
         return tuple()
 

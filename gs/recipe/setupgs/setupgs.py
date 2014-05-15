@@ -15,6 +15,7 @@
 from Testing import makerequest
 from AccessControl.SecurityManagement import newSecurityManager
 from Products.GroupServer.creation import manage_addGroupserverSite
+from zc.buildout import UserError
 SITE_ID = 'initial_site'
 
 
@@ -26,27 +27,35 @@ class SetupGS(object):
         newSecurityManager(None, admin)
         self.app = makerequest.makerequest(app)
 
-    def create_site(self, id, title, admin_email, admin_password,
+    def create_site(self, siteId, title, admin_email, admin_password,
         zope_admin_id, timezone, canonicalHost, canonicalPort,
         smtp_host, smtp_port, smtp_user, smtp_password, databaseHost,
         databasePort, databaseUsername, databasePassword, databaseName):
         '''Create a GroupServer site'''
 
-        manage_addGroupserverSite(self.app, id, title, admin_email,
+        manage_addGroupserverSite(self.app, siteId, title, admin_email,
             admin_password, zope_admin_id, timezone, canonicalHost,
             canonicalPort, smtp_host, smtp_port, smtp_user, smtp_password,
             databaseHost, databasePort, databaseUsername, databasePassword,
             databaseName)
-        assert hasattr(self.app, id), '%s not found'
-        assert hasattr(getattr(self.app, id), 'Content'), 'Content not found'
-        assert hasattr(getattr(getattr(self.app, id), 'Content'), SITE_ID), \
-                        '%s not found' % SITE_ID
+        # TODO: turn the asserts into tests that raise zc.buildout.UserError
+        if not hasattr(self.app, siteId):
+            m = '"{0}" folder not found'.format(siteId)
+            raise UserError(m)
+        if not hasattr(getattr(self.app, siteId), 'Content'):
+            m = '"Content" folder not found in {0}'.format(siteId)
+            raise UserError(m)
+        if not hasattr(getattr(getattr(self.app, siteId), 'Content'), SITE_ID):
+            m = '"{0}" not found in the "{0}/Content" folder'.format(SITE_ID)
+            raise UserError(m)
 
         vhm = getattr(self.app, 'virtual_hosting', None)
-        assert vhm, 'Could not find the VHM in %s' % self.app
+        if not vhm:
+            m = 'Could not find the VHM in {0}'.format(self.app)
+            raise UserError(m)
         #'++skin++skin_gs_ogn' does not work during install
         mappingD = {'host': canonicalHost,
-                    'id': id,
+                    'id': siteId,
                     'site': SITE_ID,
                     'skin': ''}
         mapping = '%(host)s/%(id)s/Content/%(site)s/%(skin)s\n' % mappingD
