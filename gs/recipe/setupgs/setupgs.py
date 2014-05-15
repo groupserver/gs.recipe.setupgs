@@ -27,17 +27,14 @@ class SetupGS(object):
         newSecurityManager(None, admin)
         self.app = makerequest.makerequest(app)
 
-    def create_site(self, siteId, title, admin_email, admin_password,
-        zope_admin_id, timezone, canonicalHost, canonicalPort,
-        smtp_host, smtp_port, smtp_user, smtp_password, databaseHost,
-        databasePort, databaseUsername, databasePassword, databaseName):
+    def create_site(self, siteId, title, supportEmail,
+        admin_email, admin_password, canonicalHost, canonicalPort,
+        smtp_host, smtp_port, smtp_user, smtp_password):
         '''Create a GroupServer site'''
 
-        manage_addGroupserverSite(self.app, siteId, title, admin_email,
-            admin_password, zope_admin_id, timezone, canonicalHost,
-            canonicalPort, smtp_host, smtp_port, smtp_user, smtp_password,
-            databaseHost, databasePort, databaseUsername, databasePassword,
-            databaseName)
+        manage_addGroupserverSite(self.app, siteId, title, supportEmail,
+            admin_email, admin_password, canonicalHost, canonicalPort,
+            smtp_host, smtp_port, smtp_user, smtp_password)
         # TODO: turn the asserts into tests that raise zc.buildout.UserError
         if not hasattr(self.app, siteId):
             m = '"{0}" folder not found'.format(siteId)

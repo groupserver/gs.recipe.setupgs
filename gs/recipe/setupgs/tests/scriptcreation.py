@@ -43,6 +43,7 @@ class TestScriptCreation(TestCase):
         self.options['zope_admin'] = 'parannah'
         self.options['instance_id'] = 'ethyl_the_frog'
         self.options['instance_title'] = 'violence'
+        self.options['support_email'] = 'support@example.comd'
         self.options['gs_admin_email'] = 'durk@example.com'
         self.options['gs_admin_password'] = 'toad the wet sprocket'
         self.options['gs_timezone'] = 'UTC'
@@ -52,12 +53,6 @@ class TestScriptCreation(TestCase):
         self.options['gs_smtp_port'] = '42'
         self.options['gs_smtp_user'] = ''
         self.options['gs_smtp_password'] = ''
-        self.options['database_host'] = 'localhost'
-        self.options['database_port'] = '8432'
-        self.options['database_admin'] = 'dinsdale'
-        self.options['database_username'] = 'ethyl_the_frog'
-        self.options['database_password'] = 'toad the wet sprocket'
-        self.options['database_name'] = 'ethyl_the_frog'
         self.recipe = Recipe(self.buildout, self.name, self.options)
 
         gs.recipe.setupgs.sys.stdout = mock.MagicMock()
