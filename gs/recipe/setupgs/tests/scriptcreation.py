@@ -17,10 +17,10 @@ from os import mkdir
 from shutil import rmtree
 from tempfile import mkdtemp
 from unittest import TestCase, main as unittest_main
-import mock
+from mock import MagicMock
 import zc.buildout
-import gs.recipe.setupgs
-from gs.recipe.setupgs import Recipe
+import gs.recipe.setupgs.recipe
+from gs.recipe.setupgs import SetupGSRecipe
 
 
 class TestScriptCreation(TestCase):
@@ -52,10 +52,10 @@ class TestScriptCreation(TestCase):
         self.options['gs_smtp_port'] = '42'
         self.options['gs_smtp_user'] = ''
         self.options['gs_smtp_password'] = ''
-        self.recipe = Recipe(self.buildout, self.name, self.options)
+        self.recipe = SetupGSRecipe(self.buildout, self.name, self.options)
 
-        gs.recipe.setupgs.sys.stdout = mock.MagicMock()
-        gs.recipe.setupgs.sys.stderr = mock.MagicMock()
+        gs.recipe.setupgs.recipe.sys.stdout = MagicMock()
+        gs.recipe.setupgs.recipe.sys.stderr = MagicMock()
 
     def tearDown(self):
         rmtree(self.tempdir)
@@ -105,20 +105,20 @@ class TestScriptCreation(TestCase):
     def test_install_success(self):
         'Test if we get a 0 if the install function works.'
         # Note that 0 is success for a command in the Unix shell
-        gs.recipe.setupgs.subprocess.call = mock.MagicMock(return_value=0)
+        gs.recipe.setupgs.recipe.subprocess.call = MagicMock(return_value=0)
         t = self.recipe.install()
-        self.assertEqual(1, gs.recipe.setupgs.subprocess.call.call_count)
-        args, kw_args = gs.recipe.setupgs.subprocess.call.call_args
+        self.assertEqual(1, gs.recipe.setupgs.recipe.subprocess.call.call_count)
+        args, kw_args = gs.recipe.setupgs.recipe.subprocess.call.call_args
         self.assertIn('instance', args[0])
         self.assertEqual(t, tuple())
 
     def test_install_fail(self):
         'Test that we get a UserError is raised if the install function fails.'
         # Note that 1 is failure for a command in the Unix shell
-        gs.recipe.setupgs.sys.exit = mock.MagicMock()
-        gs.recipe.setupgs.subprocess.call = mock.MagicMock(return_value=1)
+        gs.recipe.setupgs.recipe.sys.exit = MagicMock()
+        gs.recipe.setupgs.recipe.subprocess.call = MagicMock(return_value=1)
         self.assertRaises(zc.buildout.UserError, self.recipe.install)
-        self.assertEqual(1, gs.recipe.setupgs.subprocess.call.call_count)
+        self.assertEqual(1, gs.recipe.setupgs.recipe.subprocess.call.call_count)
 
 if __name__ == '__main__':
     unittest_main()
