@@ -27,7 +27,7 @@ with codecs.open('README.txt', encoding='utf-8') as f:
 with codecs.open(os.path.join("docs", "HISTORY.txt"), encoding='utf-8') as f:
     long_description += '\n' + f.read()
 
-entry_point = 'gs.recipe.setupgs:Recipe'
+entry_point = 'gs.recipe.setupgs:SetupGSRecipe'
 entry_points = {"zc.buildout": ["default = %s" % entry_point]}
 
 tests_require = ['zope.testing', 'zc.buildout', 'mock']
