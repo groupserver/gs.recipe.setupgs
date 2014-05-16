@@ -20,47 +20,11 @@ import subprocess
 import sys
 import tempfile
 from zc.buildout import UserError
+from gs.recipe.base import Recipe
 
 
-class Recipe(object):
-    """zc.buildout recipe"""
-
-    def __init__(self, buildout, name, options):
-        self.buildout = buildout
-        self.name = name
-        self.options = options
-        self.fileName = os.path.join(self.buildout['buildout']['directory'],
-                                     'var', "%s.cfg" % self.name)
-
-        # suppress script generation
-        self.options['scripts'] = ''
-        options['bin-directory'] = buildout['buildout']['bin-directory']
-
-    def should_run(self):
-        '''Returns True if the recipe should be run. By setting the
-        "run-once" option to false, off, or no then the recipe will always be
-        run.'''
-        runonce = ((('run-once' in self.options)
-                    and self.options['run-once'].lower()) or 'true')
-        #We'll use the existance of this file as flag for the run-once option
-        retval = True  # Uncharactistic optomisim
-
-        if runonce not in ['false', 'off', 'no']:
-            if os.path.exists(self.fileName):
-                m = '''
-*********************************************************************
-Skipped: The setup script %s has already been run. If you want
-to run it again set the run-once option to false or delete
-%s
-*********************************************************************\n\n''' %\
-                    (self.name, self.fileName)
-                sys.stdout.write(m)
-                retval = False
-        return retval
-
-    def mark_locked(self):
-        with open(self.fileName, 'w') as lockfile:
-            lockfile.write('1')
+class SetupGSRecipe(Recipe):
+    """zc.buildout recipe to set up GroupServer"""
 
     def create_script(self):
         f = os.path.dirname(__file__)

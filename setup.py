@@ -69,6 +69,7 @@ setup(name='gs.recipe.setupgs',
       install_requires=[
         'setuptools',
         'zc.buildout',
+        'gs.recipe.base',
         ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),

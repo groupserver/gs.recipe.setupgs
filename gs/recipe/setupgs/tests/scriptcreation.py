@@ -14,7 +14,6 @@
 ##############################################################################
 from __future__ import absolute_import, unicode_literals
 from os import mkdir
-from os.path import exists
 from shutil import rmtree
 from tempfile import mkdtemp
 from unittest import TestCase, main as unittest_main
@@ -61,54 +60,12 @@ class TestScriptCreation(TestCase):
     def tearDown(self):
         rmtree(self.tempdir)
 
-    def should_run_false_options(self, val):
-        '''Test if seting the "run-once" option to false always causes
-        the should_run method to return True.'''
-        self.recipe.options = {'run-once': val}
-        with open(self.recipe.fileName, 'w') as togglefile:
-            togglefile.write('1')
-        r = self.recipe.should_run()
-        self.assertTrue(r)
-
-    def test_should_run_false(self):
-        'Test if setting run-once to False prevents the script from being run'
-        self.should_run_false_options('false')
-        self.should_run_false_options('False')
-
-    def test_should_run_no(self):
-        'Test if setting run-once to No prevents the script from being run'
-        self.should_run_false_options('no')
-        self.should_run_false_options('No')
-
-    def test_should_run_off(self):
-        'Test if setting run-once to Off prevents the script from being run'
-        self.should_run_false_options('off')
-        self.should_run_false_options('Off')
-
-    def test_should_run_no_file(self):
-        '''Test if should_run returns True if there is no toggle-file'''
-        r = self.recipe.should_run()
-        self.assertTrue(r)
-
-    def test_should_run_file(self):
-        '''Test if should_run returns False if there is a toggle-file'''
-        with open(self.recipe.fileName, 'w') as togglefile:
-            togglefile.write('1')
-        r = self.recipe.should_run()
-        self.assertFalse(r)
-
     def test_quote_command(self):
         'Test the quote_command function.'
         c = 'I am a fish'.split()
         expected = '"I" "am" "a" "fish"'
         r = self.recipe.quote_command(c)
         self.assertEqual(expected, r)
-
-    def test_mark_locked(self):
-        'Test if we mark_locked creates a lockfile'
-        self.recipe.mark_locked()
-        r = exists(self.recipe.fileName)
-        self.assertTrue(r)
 
     def test_create_script(self):
         'Test the creation of a script.'
