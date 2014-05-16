@@ -13,6 +13,7 @@
 #
 ##############################################################################
 from __future__ import absolute_import, unicode_literals
+import codecs
 from os import mkdir
 from shutil import rmtree
 from tempfile import mkdtemp
@@ -20,7 +21,8 @@ from unittest import TestCase, main as unittest_main
 from mock import MagicMock
 import zc.buildout
 import gs.recipe.setupgs.recipe
-from gs.recipe.setupgs import SetupGSRecipe
+from gs.recipe.setupgs.recipe import SetupGSRecipe
+UTF8 = 'utf-8'
 
 
 class TestScriptCreation(TestCase):
@@ -39,7 +41,6 @@ class TestScriptCreation(TestCase):
         self.options = {}
         self.options['recipe'] = 'gs.recipe.setupgs'
         self.options['zope_admin_name'] = 'durk'
-        self.options['zope_admin'] = 'parannah'
         self.options['instance_id'] = 'ethyl_the_frog'
         self.options['instance_title'] = 'violence'
         self.options['support_email'] = 'support@example.comd'
@@ -83,14 +84,14 @@ class TestScriptCreation(TestCase):
         'Test if the write_script function works.'
         outText = 'I am a fish'
         filename = self.recipe.write_script(outText)
-        with open(filename, 'r') as infile:
+        with codecs.open(filename, 'r', UTF8) as infile:
             inText = infile.read()
         self.assertEqual(outText, inText)
 
     def test_get_script(self):
         'Test the get_script functiom.'
         filename = self.recipe.get_script()
-        with open(filename, 'r') as infile:
+        with codecs.open(filename, 'r', UTF8) as infile:
             inText = infile.read()
         expected = '# -*- coding: utf-8 -*-'
         self.assertEqual(expected, inText[:23])

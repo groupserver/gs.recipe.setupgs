@@ -7,7 +7,7 @@ import unittest
 import zc.buildout.tests
 import zc.buildout.testing
 from zope.testing import doctest, renormalizing
-from gs.recipe.setupgs.tests.scriptcreation import TestScriptCreation
+from gs.recipe.setupgs.tests.recipe import TestScriptCreation
 
 optionflags = (doctest.ELLIPSIS |
                 doctest.NORMALIZE_WHITESPACE |
