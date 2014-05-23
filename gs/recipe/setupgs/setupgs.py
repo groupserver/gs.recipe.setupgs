@@ -14,8 +14,8 @@
 ##############################################################################
 from Testing import makerequest
 from AccessControl.SecurityManagement import newSecurityManager
-from Products.GroupServer.creation import manage_addGroupserverSite
 from zc.buildout import UserError
+from Products.GroupServer.creation import manage_addGroupserverSite
 SITE_ID = 'initial_site'
 
 
