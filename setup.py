@@ -73,6 +73,6 @@ setup(name='gs.recipe.setupgs',
         ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
-      test_suite='gs.recipe.setupgs.tests.test_docs.test_suite',
+      test_suite='gs.recipe.setupgs.tests.test_all',
       entry_points=entry_points,
       )
