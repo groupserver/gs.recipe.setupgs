@@ -36,7 +36,7 @@ class SetupGSRecipe(Recipe):
             'zope_admin_name': self.options['zope_admin_name'],
             'instance_id': self.options['instance_id'],
             'instance_title': self.options['instance_title'],
-            'support_email': self.options['support_email'],
+            'support_email': self.options['gs_support_email'],
             'gs_admin_email': self.options['gs_admin_email'],
             'gs_admin_password': self.options['gs_admin_password'],
             'gs_host': self.options['gs_host'],
