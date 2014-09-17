@@ -4,5 +4,6 @@ include version.py
 include bootstrap.py
 include buildout.cfg
 include *.txt
+include *.rst
 include tox.ini
 global-exclude *.pyc
