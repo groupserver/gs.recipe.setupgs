@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright © 2014 OnlineGroups.net and Contributors.
+# Copyright © 2014, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,13 +12,13 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import, unicode_literals, print_function
 import codecs
 from os import mkdir
 from shutil import rmtree
 from tempfile import mkdtemp
 from unittest import TestCase, main as unittest_main
-from mock import MagicMock
+from mock import MagicMock, patch
 import zc.buildout
 import gs.recipe.setupgs.recipe
 from gs.recipe.setupgs.recipe import SetupGSRecipe
@@ -43,7 +43,7 @@ class TestScriptCreation(TestCase):
         self.options['zope_admin_name'] = 'durk'
         self.options['instance_id'] = 'ethyl_the_frog'
         self.options['instance_title'] = 'violence'
-        self.options['support_email'] = 'support@example.comd'
+        self.options['gs_support_email'] = 'support@example.com'
         self.options['gs_admin_email'] = 'durk@example.com'
         self.options['gs_admin_password'] = 'toad the wet sprocket'
         self.options['gs_timezone'] = 'UTC'
@@ -54,9 +54,6 @@ class TestScriptCreation(TestCase):
         self.options['gs_smtp_user'] = ''
         self.options['gs_smtp_password'] = ''
         self.recipe = SetupGSRecipe(self.buildout, self.name, self.options)
-
-        gs.recipe.setupgs.recipe.sys.stdout = MagicMock()
-        gs.recipe.setupgs.recipe.sys.stderr = MagicMock()
 
     def tearDown(self):
         rmtree(self.tempdir)
@@ -107,7 +104,8 @@ class TestScriptCreation(TestCase):
         'Test if we get a 0 if the install function works.'
         # Note that 0 is success for a command in the Unix shell
         gs.recipe.setupgs.recipe.subprocess.call = MagicMock(return_value=0)
-        t = self.recipe.install()
+        with patch('gs.recipe.setupgs.recipe.sys.stdout'):
+            t = self.recipe.install()
         self.assertEqual(1, gs.recipe.setupgs.recipe.subprocess.call.call_count)
         args, kw_args = gs.recipe.setupgs.recipe.subprocess.call.call_args
         self.assertIn('instance', args[0])
