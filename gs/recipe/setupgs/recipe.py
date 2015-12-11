@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2009, 2010, 2011, 2012, 2013, 2014 OnlineGroups.net and
 # Contributors. All Rights Reserved.
@@ -11,7 +11,7 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 """Recipe setupgs. Many thanks to the collective.recipe.updateplone authors
    :) """
 import codecs
@@ -70,14 +70,15 @@ class SetupGSRecipe(Recipe):
     def quote_command(command):
         '''Quote the script command represented by the list "command"'''
         if type(command) not in (list, tuple):
-            msg = 'Expected a tuple or list, got a "{0}".'.format(type(command))
+            m = 'Expected a tuple or list, got a "{0}".'
+            msg = m.format(type(command))
             raise TypeError(msg)
         # Quote the program name, so it works even if it contains spaces
         command = " ".join(['"%s"' % x for x in command])
         if sys.platform[:3].lower() == 'win':
-            # odd, but true: the windows cmd processor can't handle more than
-            # one quoted item per string unless you add quotes around the
-            # whole line.
+            # odd, but true: the windows cmd processor can't handle more
+            # than one quoted item per string unless you add quotes around
+            # the whole line.
             command = '"%s"' % command
         return command
 
@@ -103,8 +104,9 @@ class SetupGSRecipe(Recipe):
                         (self.name, command, retcode)
                     raise UserError(m)
             except OSError as e:
-                m = '%s: Failed to run\n\t%s\n%s\n' % (self.name, command, e)
-                raise UserError(m)
+                m = '%s: Failed to run\n\t%s\n%s\n'
+                msg = m % (self.name, command, e)
+                raise UserError(msg)
 
         return tuple()
 
